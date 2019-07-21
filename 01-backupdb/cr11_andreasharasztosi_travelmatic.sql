@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 20. Jul 2019 um 18:38
+-- Erstellungszeit: 22. Jul 2019 um 00:14
 -- Server-Version: 10.1.38-MariaDB
 -- PHP-Version: 7.1.27
 
@@ -115,7 +115,8 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`userID`, `username`, `password`, `status`) VALUES
-(1, 'fuffy@to.live', '$2y$10$bQ3L4baPEQW0ykujk5xD8.i3JzzNEPY4F8EuOtGqal5NLrmiUhYYS', 1);
+(1, 'fuffy@to.live', '$2y$10$bQ3L4baPEQW0ykujk5xD8.i3JzzNEPY4F8EuOtGqal5NLrmiUhYYS', 1),
+(2, 'adler@to.live', '$2y$10$9uF0IO8fMkVZp6PrFgvB7OtS6DbHx3if0q5Q0V.LiBXqeRLYCxGce', 0);
 
 --
 -- Indizes der exportierten Tabellen
@@ -172,7 +173,7 @@ ALTER TABLE `thtdo`
 -- AUTO_INCREMENT für Tabelle `user`
 --
 ALTER TABLE `user`
-  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

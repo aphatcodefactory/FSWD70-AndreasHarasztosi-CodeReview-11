@@ -6,47 +6,116 @@
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
           crossorigin="anonymous">
 
-    <?php
-      ob_start();
-      session_start();
-    ?>
-
     <title>Travel Omatic - CR 11</title>
   </head>
   <body>
     <div class="container">
+      <nav class="navbar navbar-light bg-light">
+        <a class="navbar-brand" href="./">Home</a>
+        <a class="navbar-brand" href="events">Events</a>
+        <a class="navbar-brand" href="restaurants">Restaurants</a>
+      </nav>
       <h1 class="text-center text-danger">Travel Omatic - CR 11</h1>
       <div class="row" style="margin-bottom: 1rem;">
-        <span class="col-11">You're logged in as: <b><?php echo $_SESSION['user'] . "</b> (as an " . $_SESSION['userStatus'] . ")"; ?></span>
+        <span class="col-11">You're logged in as: <b><?php echo $_SESSION['user'] . "</b>"; ?></span>
         <a href="actions/a_logout.php" class="col-1 btn btn-danger">Logout</a>
       </div>
+      <h3 class="text-center text-danger">Restaurants</h3>
       <table class="table table-dark">
         <thead>
           <tr>
-            <th scope="col">ISBN</th>
-            <th scope="col">Title</th>
-            <th scope="col">Author</th>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Telephone</th>
+            <th scope="col">Address</th>
             <th scope="col">Type</th>
-            <th scope="col">Status</th>
+            <th scope="col">Discription</th>
+            <th scope="col">Webaddress</th>
           </tr>
         </thead>
         <tbody>
           <?php
-            // $sql = 'SELECT isbn, title, type, status, name, surname FROM media LEFT JOIN author ON media.fk_authorID = author.authorID;';
-            // //$sql = "SELECT isbn, title, fk_authorID, type, status FROM media;";
-            // $status = array('avail', 'reserved');
-            // $result = $conn->query($sql);
-            // if ($result->num_rows > 0) {
-            //   while ($row = $result->fetch_assoc()) {
-            //     echo '<tr>
-            //       <th scope=\"row\">'.$row['isbn'].'</th>
-            //       <td>'.$row['title'].'</td>
-            //       <td>'.$row['name'].' '.$row['surname'].'</td>
-            //       <td>'.$row['type'].'</td>
-            //       <td>'.$status[$row['status']].'</td>
-            //     </tr>';
-            //   }
-            // }
+              $user = $trvomatic->selectRow('user', 'status');
+              if ($user['status'] == 1) {
+                $admin = '<td>
+                            <a href="edit.php" class="btn btn-secondary">Edit</a>
+                            <a href="actions/a_delete.php" class="btn btn-danger">Delete</a>
+                          </td>';
+              }
+
+              $result = $trvomatic->selectRow('restaurant', '*');
+              while ($row = $result->fetch_assoc()) {
+                echo '<tr>
+                  <th scope=\"row\">'.$row['restaurantID'].'</th>
+                  <td>'.html_entity_decode($row['name']).'</td>
+                  <td>'.$row['tel'].'</td>
+                  <td>'.html_entity_decode($row['address']).'</td>
+                  <td>'.html_entity_decode($row['type']).'</td>
+                  <td>'.html_entity_decode($row['discription']).'</td>
+                  <td><a href="'.$row['webaddress'].'" target="_blank">'.$row['webaddress'].'</a></td>'.
+                  $admin.'
+                </tr>';
+              }
+          ?>
+        </tbody>
+      </table>
+      <h3 class="text-center text-danger">Things To Do/Sights</h3>
+      <table class="table table-dark">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Address</th>
+            <th scope="col">Type</th>
+            <th scope="col">Discription</th>
+            <th scope="col">Webaddress</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php
+              $result = $trvomatic->selectRow('thtdo', '*');
+              while ($row = $result->fetch_assoc()) {
+                echo '<tr>
+                  <th scope=\"row\">'.$row['thtdoID'].'</th>
+                  <td>'.html_entity_decode($row['name']).'</td>
+                  <td>'.html_entity_decode($row['address']).'</td>
+                  <td>'.html_entity_decode($row['type']).'</td>
+                  <td>'.html_entity_decode($row['discription']).'</td>
+                  <td><a href="'.$row['webaddress'].'" target="_blank">'.$row['webaddress'].'</a></td>
+                </tr>';
+              }
+          ?>
+        </tbody>
+      </table>
+      <h3 class="text-center text-danger">Events</h3>
+      <table class="table table-dark">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Location</th>
+            <th scope="col">Address</th>
+            <th scope="col">Webaddress</th>
+            <th scope="col">Discription</th>
+            <th scope="col">Begin</th>
+            <th scope="col">Ticketprice in &euro;</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php
+              $result = $trvomatic->selectRow('event', '*');
+              while ($row = $result->fetch_assoc()) {
+                echo '<tr>
+                  <th scope=\"row\">'.$row['eventID'].'</th>
+                  <td>'.html_entity_decode($row['name']).'</td>
+                  <td>'.$row['location'].'</td>
+                  <td>'.html_entity_decode($row['address']).'</td>
+                  <td><a href="'.$row['webaddress'].'" target="_blank">'.$row['webaddress'].'</a></td>
+                  <td>'.html_entity_decode($row['discription']).'</td>
+                  <td>'.$row['eventStart'].'</td>
+                  <td>'.$row['ticketprice'].'</td>
+                </tr>';
+              }
           ?>
         </tbody>
       </table>

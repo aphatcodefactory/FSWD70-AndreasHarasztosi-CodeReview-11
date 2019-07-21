@@ -10,9 +10,9 @@
       }
     } // end: __construct
 
-    public function insertTbl($tblName, $cols = array(), $values = array()) {
-      $colsStr = impode($cols, ', ');
-      $valuesStr = impode($values, "', ");
+    public function insertTbl($tblName, $cols = array(), $values) {
+      $colsStr = implode($cols, ', ');
+      $valuesStr = implode($values, "', '");
       $sql = "INSERT INTO $tblName($colsStr) VALUES('".$valuesStr."')";
 
       $res = mysqli_query($this->mysqli, $sql);

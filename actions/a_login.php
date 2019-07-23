@@ -12,22 +12,30 @@
         trim($_POST['pass'])
         )
     );
+
+    $pw = hash('sha256', $pass);
+
     //basic email validation
     if ( !filter_var($userName, FILTER_VALIDATE_EMAIL) ) {
     $error = true;
     $userNameError = "Your username must be a valid email address." ;
    } else {
-    // checks whether the email exists or not
-    $result = $trvomatic->selectRow('user', 'userName', "WHERE userName = '$userName';");
-    $count = mysqli_num_rows($result);
+    // checks whether the user name exists or not
+      $result = $trvomatic->selectRow('user', 'userName', "WHERE userName = '$userName' AND
+        password = '$pw';");
+      $count = mysqli_num_rows($result);
 
-    if ($count == 1) {
-      $user = $result->fetch_assoc();
-      ob_start();
-      session_start();
-      $_SESSION['user'] = $user['userName'];
-      $_SESSION['userStatus'] = $user['userStatus'];
-      header('Location: ../');
-    }
+      if ($count == 1) {
+        $user = $result->fetch_assoc();
+        ob_start();
+        session_start();
+        $_SESSION['user'] = $user['userName'];
+        $_SESSION['userStatus'] = $user['userStatus'];
+        header('Location: ../');
+      } else {
+        echo "<h3>Invalid username and/or password.</h3>
+              <h4><a href=\"../\">back to Login</a></h4>";
+      }
     }
   }
+?>

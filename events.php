@@ -1,3 +1,9 @@
+<?php
+  require_once 'classes/Database.php';
+  require_once 'actions/dbconnect.php';
+  ob_start();
+  session_start();
+?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
@@ -17,58 +23,10 @@
       </nav>
       <h1 class="text-center text-danger">Travel Omatic - CR 11</h1>
       <div class="row" style="margin-bottom: 1rem;">
-        <span class="col-11">You're logged in as: <b><?php //echo $_SESSION['user']; ?></b></span>
+        <span class="col-11">You're logged in as: <b><?php echo $_SESSION['user'] . "</b>"; ?></span>
         <a href="actions/a_logout.php" class="col-1 btn btn-danger">Logout</a>
       </div>
-      <h3 class="text-center text-danger">Restaurants</h3>
-      <table class="table table-dark">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Name</th>
-            <th scope="col">Telephone</th>
-            <th scope="col">Address</th>
-            <th scope="col">Type</th>
-            <th scope="col">Discription</th>
-            <th scope="col">Webaddress</th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php
-              $user = $trvomatic->selectRow('user', 'status');
-              $result = $trvomatic->selectRow('restaurant', '*');
-
-              while ($_SESSION['row'] = $result->fetch_assoc()) {
-                //if ($_SESSION['userStatus'] == 1) {
-                  echo '<tr>
-                    <th scope=\"row\">'.$_SESSION['row']['restaurantID'].'</th>
-                    <td>'.html_entity_decode($_SESSION['row']['name']).'</td>
-                    <td>'.$_SESSION['row']['tel'].'</td>
-                    <td>'.html_entity_decode($_SESSION['row']['address']).'</td>
-                    <td>'.html_entity_decode($_SESSION['row']['type']).'</td>
-                    <td>'.html_entity_decode($_SESSION['row']['discription']).'</td>
-                    <td><a href="'.$_SESSION['row']['webaddress'].'" target="_blank">'.$_SESSION['row']['webaddress'].'</a></td>
-                    <td>
-                      <a href="actions/a_update.php?id='.$_SESSION['row']['restaurantID'].'" class="btn btn-success">Update</a><br>
-                      <a href="actions/a_delete.php?id='.$_SESSION['row']['restaurantID'].'" class="btn btn-danger" style="margin-top: 0.5rem;">Delete</a>
-                    </td>
-                  </tr>';
-                // } else {
-                //   echo '<tr>
-                //     <th scope=\"row\">'.$_SESSION['row']['restaurantID'].'</th>
-                //     <td>'.html_entity_decode($_SESSION['row']['name']).'</td>
-                //     <td>'.$_SESSION['row']['tel'].'</td>
-                //     <td>'.html_entity_decode($_SESSION['row']['address']).'</td>
-                //     <td>'.html_entity_decode($_SESSION['row']['type']).'</td>
-                //     <td>'.html_entity_decode($_SESSION['row']['discription']).'</td>
-                //     <td><a href="'.$_SESSION['row']['webaddress'].'" target="_blank">'.$_SESSION['row']['webaddress'].'</a></td>
-                //   </tr>';
-                // }
-
-              }
-          ?>
-        </tbody>
-      </table>
+      
       <h3 class="text-center text-danger">Things To Do/Sights</h3>
       <table class="table table-dark">
         <thead>

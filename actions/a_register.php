@@ -32,7 +32,7 @@ if ( isset($_POST['btn-signup']) && !empty($_POST['btn-signup']) ) {
       $passError = "Please enter password.";
    }
 
-   $pw = password_hash($pass, PASSWORD_DEFAULT);
+   $pw = hash('sha256', $pass);
 
    ob_start();
    session_start();

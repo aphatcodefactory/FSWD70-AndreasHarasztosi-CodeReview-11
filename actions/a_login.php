@@ -21,16 +21,17 @@
     $userNameError = "Your username must be a valid email address." ;
    } else {
     // checks whether the user name exists or not
-      $result = $trvomatic->selectRow('user', 'userName', "WHERE userName = '$userName' AND
+      $result = $trvomatic->selectRow('user', 'userName, status', "WHERE userName = '$userName' AND
         password = '$pw';");
       $count = mysqli_num_rows($result);
 
       if ($count == 1) {
+        $isadmin = array('User', 'Administrator');
         $user = $result->fetch_assoc();
         ob_start();
         session_start();
         $_SESSION['user'] = $user['userName'];
-        $_SESSION['userStatus'] = $user['userStatus'];
+        $_SESSION['userStatus'] = $isadmin[$user['status']];
         header('Location: ../');
       } else {
         echo "<h3>Invalid username and/or password.</h3>

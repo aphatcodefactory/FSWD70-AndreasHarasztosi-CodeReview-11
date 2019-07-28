@@ -25,13 +25,13 @@
         <div class="form-group">
           <?php if ($_SESSION['userStatus'] == 'Administrator') {
 
-                  $result = $trvomatic->selectRow($_GET['tbl'], '*', 'WHERE '.$_GET['tbl'].'ID = '.$_GET['tbl']);
+                  $result = $trvomatic->selectRow($_GET['tbl'], '*', 'WHERE '.$_GET['tbl'].'ID = '.$_GET['id']);
                   $row = $result->fetch_assoc();
 
                   switch ($_GET['tbl']) {
                     case 'restaurant':
                       echo '
-                        <label><b>#'.$_GET['id'].'</b></label>
+                        <label>ID:&nbsp;<input type="text" class="form-control" value="'.$_GET['id'].'" readonly="readonly"></label>
                         <label for="name">Name:
                           <input class="form-control" type="text" name="name" value="'.html_entity_decode($row['name']).'">
                         </label>
@@ -50,12 +50,13 @@
                         <label for="webaddress">Webaddress
                           <input class="form-control" type="text" name="webaddress" value="'.$row['webaddress'].'">
                         </label>
+                        <a href="a_update.php?tbl='.$_GET['tbl'].'&id='.$_GET['id'].'" class="btn btn-success">Update</a>
                       ';
                       break;
-                    
+
                     case 'thtdo':
                       echo '
-                        <label><b>#'.$_GET['id'].'</b></label>
+                        <label>ID:&nbsp;<input type="text" class="form-control" value="'.$_GET['id'].'" readonly="readonly"></label>
                         <label for="name">Name:
                           <input class="form-control" type="text" name="name" value="'.html_entity_decode($row['name']).'">
                         </label>
@@ -71,12 +72,13 @@
                         <label for="webaddress">Webaddress:
                           <input class="form-control" type="text" name="webaddress" value="'.$row['webaddress'].'">
                         </label>
+                        <a href="a_update.php" class="btn btn-success">Update</a>
                       ';
                       break;
 
                     case 'event':
                       echo '
-                        <label><b>#'.$_GET['id'].'</b></label>
+                        <label>ID:&nbsp;<input type="text" class="form-control" value="'.$_GET['id'].'" readonly="readonly"></label>
                         <label for="name">Name:
                           <input class="form-control" type="text" name="name" value="'.html_entity_decode($row['name']).'">
                         </label>
@@ -98,6 +100,7 @@
                         <label for="ticketprice">Ticketprice:
                           <input class="form-control" type="text" name="ticketprice" value="'.$row['ticketprice'].'">
                         </label>
+                        <a href="a_update.php" class="btn btn-success">Update</a>
                       ';
                       break;
                   }
